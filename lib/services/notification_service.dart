@@ -22,9 +22,15 @@ class NotificationService {
       requestBadgePermission: true,
       requestSoundPermission: true,
     );
+    const macOsSettings = DarwinInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+    );
     const initSettings = InitializationSettings(
       android: androidSettings,
       iOS: iosSettings,
+      macOS: macOsSettings,
     );
 
     await _plugin.initialize(
@@ -49,6 +55,11 @@ class NotificationService {
         IOSFlutterLocalNotificationsPlugin>();
     if (ios != null) {
       await ios.requestPermissions(alert: true, badge: true, sound: true);
+    }
+    final macos = _plugin.resolvePlatformSpecificImplementation<
+        MacOSFlutterLocalNotificationsPlugin>();
+    if (macos != null) {
+      await macos.requestPermissions(alert: true, badge: true, sound: true);
     }
     return true;
   }
@@ -75,6 +86,12 @@ class NotificationService {
           icon: '@mipmap/ic_launcher',
         ),
         iOS: DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+          sound: 'default',
+        ),
+        macOS: DarwinNotificationDetails(
           presentAlert: true,
           presentBadge: true,
           presentSound: true,
