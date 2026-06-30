@@ -10,7 +10,9 @@ void main() async {
   await Hive.initFlutter();
 
   try {
-    await NotificationService().init();
+    final service = NotificationService();
+    await service.init();
+    await service.requestPermission();
   } catch (_) {
   }
 

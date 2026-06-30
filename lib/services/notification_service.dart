@@ -78,6 +78,7 @@ class NotificationService {
           presentAlert: true,
           presentBadge: true,
           presentSound: true,
+          sound: 'default',
         ),
       ),
       uiLocalNotificationDateInterpretation:
